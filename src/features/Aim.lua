@@ -83,5 +83,7 @@ end
 
 installSilent()
 
--- Возвращаем таблицу, чтобы другие модули (Trigger) могли её использовать
+-- Экспортируем функцию поиска цели для триггербота
+Aim.SelectTarget = selectAimTarget
+
 return Aim
