@@ -1,9 +1,11 @@
 -- src/features/Trigger.lua
-local BloxStrike = _G.BloxStrike
+local BloxStrike = getgenv().BloxStrike
+if not BloxStrike then return warn("[BloxStrike] Core not found in Trigger!") end
 local Config = BloxStrike.Config
 local State = BloxStrike.State
 local Utils = BloxStrike.Utils
 local Aim = BloxStrike.Aim
+if not Aim then return warn("[BloxStrike] Aim not found in Trigger!") end
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local LocalPlayer = Players.LocalPlayer
