@@ -6,8 +6,7 @@ if REG.BloxStrike and REG.BloxStrike.State and REG.BloxStrike.State.Running then
     REG.BloxStrike.State:DisconnectAll()
 end
 
--- Передаем Core внутрь модуля через ...
-local function Load(name, path, Core)
+local function Load(name, path)
     local success, code = pcall(function() return game:HttpGet(BASE_URL .. path) end)
     if not success then 
         warn("[BloxStrike] 404: " .. path)
@@ -18,7 +17,7 @@ local function Load(name, path, Core)
         warn("[BloxStrike] Error " .. name .. ": " .. err) 
         return nil 
     end
-    return func(Core) -- Передаем таблицу как аргумент (...)
+    return func() -- Вызываем без аргументов
 end
 
 -- 1. Ядро
@@ -31,11 +30,11 @@ if not Config or not State or not Utils then
     return
 end
 
-local Core = { Config = Config, State = State, Utils = Utils }
-REG.BloxStrike = Core
+-- Сохраняем ядро в глобальную среду, чтобы модули могли его достать
+REG.BloxStrike = { Config = Config, State = State, Utils = Utils }
 
 -- 2. Фичи
-Core.Aim = Load("Aim", "src/features/Aim.lua", Core)
-Core.Trigger = Load("Trigger", "src/features/Trigger.lua", Core)
+REG.BloxStrike.Aim = Load("Aim", "src/features/Aim.lua")
+REG.BloxStrike.Trigger = Load("Trigger", "src/features/Trigger.lua")
 
 print("[BloxStrike] Core, Aim & Trigger loaded!")
