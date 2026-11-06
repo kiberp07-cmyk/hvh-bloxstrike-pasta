@@ -1,10 +1,13 @@
 -- src/features/Aim.lua
-local BloxStrike = _G.BloxStrike
+local BloxStrike = getgenv().BloxStrike
+if not BloxStrike then return warn("[BloxStrike] Core not found in Aim!") end
 local Config = BloxStrike.Config
 local State = BloxStrike.State
 local Utils = BloxStrike.Utils
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
+
+-- ... (остальной код Aim оставляешь без изменений) ...
 
 local Aim = { Ready = false, Target = nil, NextSelect = 0, Raycast = nil, GetRayIgnore = nil }
 local AimParts = { "Head", "UpperTorso", "LowerTorso" }
