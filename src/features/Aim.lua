@@ -1,6 +1,6 @@
 -- src/features/Aim.lua
-local BloxStrike = ...
-if not BloxStrike then return warn("[BloxStrike] Core not passed to Aim!") end
+local BloxStrike = getgenv().BloxStrike
+if not BloxStrike then return warn("[BloxStrike] Core not found in Aim!") end
 local Config = BloxStrike.Config
 local State = BloxStrike.State
 local Utils = BloxStrike.Utils
