@@ -2,15 +2,15 @@
 local BASE_URL = "https://raw.githubusercontent.com/kiberp07-cmyk/hvh-bloxstrike-pasta/main/"
 local REG = getgenv and getgenv() or _G
 
--- Очистка старой версии
 if REG.BloxStrike and REG.BloxStrike.State and REG.BloxStrike.State.Running then
     REG.BloxStrike.State:DisconnectAll()
 end
 
-local function Load(name, path)
+-- Передаем Core внутрь модуля через ...
+local function Load(name, path, Core)
     local success, code = pcall(function() return game:HttpGet(BASE_URL .. path) end)
     if not success then 
-        warn("[BloxStrike] 404 Not Found: " .. path)
+        warn("[BloxStrike] 404: " .. path)
         return nil 
     end
     local func, err = loadstring(code, "=" .. name)
@@ -18,7 +18,7 @@ local function Load(name, path)
         warn("[BloxStrike] Error " .. name .. ": " .. err) 
         return nil 
     end
-    return func()
+    return func(Core) -- Передаем таблицу как аргумент (...)
 end
 
 -- 1. Ядро
@@ -31,13 +31,11 @@ if not Config or not State or not Utils then
     return
 end
 
-REG.BloxStrike = { Config = Config, State = State, Utils = Utils }
+local Core = { Config = Config, State = State, Utils = Utils }
+REG.BloxStrike = Core
 
 -- 2. Фичи
-local Aim = Load("Aim", "src/features/Aim.lua")
-local Trigger = Load("Trigger", "src/features/Trigger.lua")
-
-if Aim then REG.BloxStrike.Aim = Aim end
-if Trigger then REG.BloxStrike.Trigger = Trigger end
+Core.Aim = Load("Aim", "src/features/Aim.lua", Core)
+Core.Trigger = Load("Trigger", "src/features/Trigger.lua", Core)
 
 print("[BloxStrike] Core, Aim & Trigger loaded!")
