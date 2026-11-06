@@ -24,5 +24,6 @@ REG.BloxStrike = { Config = Config, State = State, Utils = Utils }
 
 -- 2. Фичи
 REG.BloxStrike.Aim = Load("Aim", "src/features/Aim.lua")
+REG.BloxStrike.Trigger = Load("Trigger", "src/features/Trigger.lua")
 
-print("[BloxStrike] Core & Aim loaded!")
+print("[BloxStrike] Core, Aim & Trigger loaded!")
